@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<div class="join_container">
+    <header class = "logo">
+        <img  src="{% static 'dissplaylogo.png' %}" alt="" width="150" height="150">
+        <h2 class="my-3">회원가입</h2>
+    </header>
+    <main class="form-signup">
+        <form method="post" action="{% url 'Users:signup' %}">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="username" name="username" placeholder="사용자ID"
+                       value="{{ form.username.value|default_if_none:'' }}">
+                <label for="floatingInput">사용자ID</label>
+            </div>
+            <div class="form-floating">
+              <input type="password" class="form-control" id="password" name="password1" placeholder="Password"
+                     value="{{ form.password.value|default_if_none:'' }}">
+              <label for="floatingPassword">비밀번호</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password2" name="password2" placeholder="password"
+                       value="{{ form.password2.value|default_if_none:'' }}">
+                <label for="floatingPassword">비밀번호 확인</label>
+            </div>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" name="email" placeholder="email"
+                       value="{{ form.email.value|default_if_none:'' }}">
+                <label for="floatingPassword">이메일</label>
+            </div>
+            <div class="my-5"></div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary" style="background-color: #4C50BB;">가입하기</button>
+        </form>
+    </main>
+</div>
+{% endblock %}

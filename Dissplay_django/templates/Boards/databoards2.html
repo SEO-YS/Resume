@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load Boards_filter %}
+{% block extrahead %}
+    <link rel = "stylesheet" href="{% static 'board.css' %}">
+<style>
+        .card-container {
+            margin-top: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+            /* background-color: #EEEE; */
+        }
+
+        .card {
+            margin: 24px;
+            width: 600px;
+            height: 500px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            background-color: #CACACA;
+            border-radius: 10px;
+            /* 카드의 모서리를 둥글게 조정 */
+            transition: transform 0.3s;
+        }
+
+        .card-body {
+            /* background-color: #CCD2F0 */
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+
+</style>
+{% endblock %}
+<div class="container my-3">
+   <div class="row my-3 pt-4 pb-2">
+        <div class="col-2">
+            <a href="{% url 'Boards:question_create' tabnum=2 %}" class="btn btn-dark bg-gradient shadow-sm">게시물 추가</a>
+        </div>
+        <div class="col-10">
+            <div class="input-group">
+                <input type="text" id="search_kw" class="form-control bg-gradient border-0 mx-1 rounded-1 shadow-sm" value="{{ kw|default_if_none:'' }}" style="background-color:#eaeaea;">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-dark shadow-sm" type="button" id="btn_search">찾기</button>
+                </div>
+            </div>
+        </div>
+   </div>
+</div>
+ <div class="container">
+    <div class="card-container">
+        {% if question_list %}
+            {% for question in question_list %}
+                <div class="card mb-3">
+                    {% if question.file %}
+                        <img src="{{ question.file.url }}" class="card-img-top" alt="Thumbnail" style="width: 100%; height: 400px; margin-left: 0px;">
+
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="400" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                            <rect width="100%" height="100%" fill="#868e96" rx="0" ry="0"></rect>
+                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">No Image</text>
+                        </svg>
+                    {% endif %}
+                        <div class="card-body">
+                                <h5 class="card-title">
+                                    <br>
+                                    <a href="{% url 'Boards:detail2' question_id=question.id %}" style="text-decoration:none; color: black;">{{ question.subject }}</a>
+                                </h5>
+                                <div class="card-text">
+                                </div>
+                            </div>
+                        </div>
+            {% endfor %}
+        {% else %}
+            <p>질문이 없습니다.</p>
+        {% endif %}
+    </div>
+</div>
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center pb-2">
+        <!-- 이전페이지 -->
+        {% if question_list.has_previous %}
+        <li class="page-item">
+{#            <!-- <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a> -->#}
+            <a class="page-link text-dark border-light shadow-sm" data-page="{{ question_list.previous_page_number }}"
+           href="javascript:void(0)">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link border-light shadow-sm" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in question_list.paginator.page_range %}
+        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link bg-dark bg-gradient border-secondary  shadow-sm" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link text-dark border-light shadow-sm" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link text-dark border-light  shadow-sm" data-page="{{ question_list.next_page_number }}" href="javascript:void(0)">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link shadow-sm" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+<form id="searchForm" method="get" action="{% url 'Boards:board2' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" id="so" name="so" value="{{ so }}">
+</form>
+{% endblock %}
+{% block script %}
+<script src="{% static 'databoard1.js' %}"></script>
+<script type='text/javascript'>
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            document.getElementById('page').value = this.dataset.page;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function() {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        document.getElementById('searchForm').submit();
+    });
+
+    $(".so").on('change', function() {
+        $("#so").val($(this).val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<title>🖥️Display🖥️</title>
+<style>
+    .link {
+        font-size: 24px;
+    }
+    .slideshow-container {
+        position: relative;
+        max-width: 2000px center;
+        height: 900px;
+        margin: auto;
+        overflow: hidden;
+    }
+{#<!--    슬라이드쇼 컨테이너-->#}
+    .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+{#<!--    슬라이드-->#}
+    .slide.active {
+        opacity: 1;
+    }
+{#<!--    투명도-->#}
+</style>
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        var slides = document.querySelectorAll('.slide');
+        var index = 0;
+
+        function showNextSlide() {
+            slides[index].classList.remove('active');
+            index = (index + 1) % slides.length;
+            slides[index].classList.add('active');
+        }
+
+        var interval = 3000;
+        setInterval(showNextSlide, interval);
+    });
+  // 페이지 로드가 완료되면 실행되는 함수
+  // 모든 슬라이드 요소를 선택하여 배열로 가져옵니다.
+  // 현재 활성화된 슬라이드의 인덱스를 나타내는 변수를 초기화합니다.
+  // 다음 슬라이드를 보여주는 함수
+  // 현재 활성화된 슬라이드에서 'active' 클래스를 제거하여 화면에서 사라지게 합니다.
+  // 인덱스를 다음 슬라이드로 업데이트합니다. 배열의 길이를 넘어가면 다시 첫 번째 슬라이드로 돌아갑니다.
+  // 새로운 현재 슬라이드에 'active' 클래스를 추가하여 화면에 나타나게 합니다.
+   // 슬라이드 전환 간격을 3초로 설정합니다.
+   // 일정한 간격으로 showNextSlide 함수를 실행하여 다음 슬라이드를 보여줍니다.
+</script>
+
+<div class="slideshow-container" >
+    <div class="slide active">
+        <img src="{% static 'Background2.png' %}" alt="" width="2000" height="900">
+    </div>
+    <div class="slide">
+        <img src="{% static 'wafer.jpeg' %}" alt="" width="2000" height="900">
+    </div>
+    <div class="slide">
+        <img src="{% static 'Background3.jpg' %}" alt="" width="2000" height="900">
+    </div>
+</div>
+{% endblock %}
+

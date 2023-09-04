@@ -1,0 +1,27 @@
+.card-container {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    /* background-color: #EEEE; */
+}
+
+.card {
+    margin: 24px;
+    width: 600px;
+    height: 500px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    background-color: #CACACA;
+    border-radius: 10px;
+    /* 카드의 모서리를 둥글게 조정 */
+    transition: transform 0.3s;
+}
+
+.card-body {
+    /* background-color: #CCD2F0 */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}

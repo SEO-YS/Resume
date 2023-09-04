@@ -1,0 +1,63 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: fixed;
+  align-items: center;
+  /*padding-top: 40px;*/
+  /*padding-bottom: 40px;*/
+  /*background-color: #f5f5f5;*/
+}
+
+.form-signup {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+/*.form-signup .checkbox {*/
+/*  font-weight: 400;*/
+/*}*/
+
+.form-signup .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signup input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signup input[type="password"] {
+  /*margin-bottom: 10px;*/
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.join_container{
+    background: #fff;
+    width: 350px;
+    height: 650px;
+    border: 1px solid #dbdbdb;
+    margin: 0 auto;
+    margin-top: 3rem;
+}
+
+.logo {
+    text-align: center;
+    font-weight: bold;
+    color: #918f8f;
+    padding-top: 20px;
+}
+
+.btn {
+  /*padding-top: 40px;*/
+}
+
+#found_id {
+  font-size: 30px; /* 원하는 크기로 조정해주세요 */
+}

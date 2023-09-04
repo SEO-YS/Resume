@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<form method="post">
+    {% csrf_token %}
+    <div class="join_container">
+      <header class = "logo">
+            <img  src="{% static 'dissplaylogo.png' %}" alt="" width="150" height="150">
+            <h2 class="my-3">아이디 찾기</h2>
+        <main class="form-signup">
+            <div class="form-floating">
+            <input type="email" class="form-control" id="email" name="email" placeholder="email"
+                   value="{{ form.email.value|default_if_none:'' }}">
+            <label for="floatingPassword">이메일</label>
+            </div>
+            <div class="my-5">
+            <button type="submit" class="w-100 btn btn-lg btn-primary" style="background-color: #4C50BB;">아이디찾기</button>
+            </div>
+        </main>
+      </header>
+    </div>
+</form>
+{% endblock %}

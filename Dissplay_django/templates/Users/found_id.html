@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<form method="post">
+    {% csrf_token %}
+  <head>
+  <link rel="stylesheet" href="{% static 'signup.css' %}">
+    <div class="join_container">
+      <header class = "logo">
+            <img  src="{% static 'dissplaylogo.png' %}" alt="" width="150" height="150">
+            <h2 class="my-3">당신의 아이디는</h2>
+        <main class="form-signup">
+            <div class="form-floating">
+                <p id="found_id">{{ username }}</p>
+            </div>
+            <h2 class="my-3">입니다</h2>
+            <div class="my-5">
+              <a href="{% url 'Users:login' %}">
+                  <button class="w-100 btn btn-lg btn-primary" type="button" style="background-color: #4C50BB;">로그인하기</button>
+              </a>
+            </div>
+        </main>
+      </header>
+    </div>
+  </head>
+</form>
+{% endblock %}
